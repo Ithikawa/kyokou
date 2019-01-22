@@ -1,0 +1,11 @@
+current_dir = ""
+file_list_csv = ""
+illustrator_csv = ""
+sleep_exception = "20"
+illustrator_buttom_sec = "5"
+illustrator_interval = "4"
+illustid_interval = "1"
+get_illust_time = "2"
+get_manga_page_time = "1"
+
+log_file = "E:\\crawl\\kyokou_log.txt"
