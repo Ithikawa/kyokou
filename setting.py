@@ -101,4 +101,3 @@ key : current value
         file_list = bak_file_list
         print("\nERROR!\nsorry DON'T CHANGE config file")
     del file_list
-    

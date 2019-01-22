@@ -9,8 +9,8 @@ import time
 # ユーザー定義のスクリプト
 from config import config
 from config import pixiv_account
-import file_replase
-import output
+from kyokou_script import file_replase
+from kyokou_script import output
 
 def main():
     print("""

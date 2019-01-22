@@ -4,7 +4,7 @@ import get_illust
 
 print(
 """
-kyokou version 1.0.3
+kyokou version 1.0.4
 Copyright (C) 2018 by Asahi Ithikawa(@ichikawa_ykhm)
 """
 )
@@ -30,7 +30,7 @@ while temp != 0:
     elif temp == "3":
         get_illust.main()
     elif temp == "9":
-        f = codecs.open(".\\readme.txt","r","utf-8")
+        f = codecs.open("files\\readme.txt","r","utf-8")
         readme = f.read().split("\r\n")
         f.close()
         print("\n-----------------------------------------------------------------------------------\n")
