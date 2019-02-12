@@ -1,1 +1,1 @@
-dir w:\二次絵保管庫 /s /b *.jpeg *.jpg *.png *.gif > \files\file_list.txt
+dir w:\�񎟊G�ۊǌ� /s /b *.jpeg *.jpg *.png *.gif > \files\file_list.txt

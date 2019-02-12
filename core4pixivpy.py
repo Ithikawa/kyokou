@@ -15,20 +15,23 @@ def get_illust_main(filelist: str,illustrator_pixiv_id: int,account: str,passwd:
     aapi = AppPixivAPI()
     # ダウンロード
     for work_no in range(0, total_works):
-        illust = json_result.response[work_no]
-        if int(illust.id) not in filelist:
-            # 漫画の場合
-            if illust.is_manga:
-                work_info = api.works(illust.id)
-                for page_no in range(0, work_info.response[0].page_count):
-                    page_info = work_info.response[0].metadata.pages[page_no]
-                    aapi.download(page_info.image_urls.large, saving_direcory_path)
-                    sleep(float(get_manga_page_time))
-            # イラストの場合
-            else:
-                aapi.download(illust.image_urls.large, saving_direcory_path)
-                sleep(float(get_illust_time))
-            sleep(float(illustid_interval))
+        try:
+            illust = json_result.response[work_no]
+            if int(illust.id) not in filelist:
+                # 漫画の場合
+                if illust.is_manga:
+                    work_info = api.works(illust.id)
+                    for page_no in range(0, work_info.response[0].page_count):
+                        page_info = work_info.response[0].metadata.pages[page_no]
+                        aapi.download(page_info.image_urls.large, saving_direcory_path)
+                        sleep(float(get_manga_page_time))
+                # イラストの場合
+                else:
+                    aapi.download(illust.image_urls.large, saving_direcory_path)
+                    sleep(float(get_illust_time))
+                sleep(float(illustid_interval))
+        except:
+            print("\nERROR!\n")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

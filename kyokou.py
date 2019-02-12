@@ -2,7 +2,6 @@ import codecs
 import os
 import config
 import pixiv_account
-import sys
 from pixivpy3 import *
 from time import sleep
 import time
@@ -10,10 +9,11 @@ import file_replase
 import output
 import core4pixivpy
 
+
 def top_title():
-    print("""
-kyokou version 1.0.4
+    print("""kyokou version 1.0.6
 Copyright (C) 2018 by Asahi Ithikawa(@ichikawa_ykhm)""")
+
 
 def controle_pannel():
     print("""
@@ -25,102 +25,63 @@ def controle_pannel():
     9.READ ME
     0.EXIT""")
 
-def setting_config_file():
-    print("""
-|| |  |   -=<( setthing config )>=-   |  | ||
-
-key : current value
+def setting_config_menu():
+    print("""key : current value
     >> < input new value >
 < Notice >
-    if you not input any sentence. not rewrite that value. 
-    
-- key name -     | - role -
-current dir      | (full path) current directory as save picture
-illust list path | (full path) file path as put illust list file
-illustrator list | (full path) file path is crawl target illustrator list file""")
+    if you not input any sentence. not rewrite that value. """)
+
+
+def input_and_setting_config(config_file,config_dim_name:str,config_line_num:int,help_str):
+    print("\n"+help_str)
+    print( config_dim_name + " : " + eval( "%s.%s" % (config_file,config_dim_name) ) )
+    temp = input("\t>> ")
+    if temp != "":    
+        file_list[config_line_num] = "%s:str = \"" % config_dim_name + temp + "\""
+
+
+def setting_config_file():
+    setting_config_menu()
     f = codecs.open( os.getcwd() + "\\config.py", "r", "utf-8" )
     file_list = f.read().split("\r\n")
     f.close()
-    bak_file_list = file_list
-    print(file_list)
-
     try:
-        print("- current value -")
-        print("current dir : " + config.current_dir)
-        temp = input("\t>> ")
-        if temp != "":    
-            file_list[0] = "current_dir = \"" + temp + "\"" 
-
-        print("\nillust list path : " + config.file_list_csv)
-        temp = input("\t>> ")
-        if temp != "":    
-            file_list[1] = "file_list_csv = \"" + temp + "\"" 
-
-        print("\nillustrator list : " + config.illustrator_csv)
-        temp = input("\t>> ")
-        if temp != "":    
-            file_list[2] = "illustrator_csv = \"" + temp + "\"" 
-
-        print("\nreplase config file...")
+        input_and_setting_config("config","current_dir",0,"(full path) current directory as save picture")
+        input_and_setting_config("config","file_list_csv",1,"(full path) file path as put illust list file")
+        input_and_setting_config("config","illustrator_csv",2,"(full path) file path is crawl target illustrator list file")
+        print("\nrewrite config file...")
         f = codecs.open( os.getcwd() + "\\config.py", "w", "utf-8" )
         for i in file_list:
             f.write( i + "\r\n" )
         f.close()
         print("\nSuccess rewrite config file!")
     except:
-        file_list = bak_file_list
         print("\nERROR!\nsorry DON'T CHANGE config file")
     del file_list
 
-def setting_pixiv():
-    print("""
-|| |  |   -=<( pixiv account )>=-   |  | ||
 
-key : current value
-    >> < input new value >
-< Notice >
-    if you not input any sentence. not rewrite that value. 
-    
-- key name -     | - role -
-    pixiv id     |     that account id
-    password     |     that account password
-    user id      |     that account user id""")
-    
+def setting_pixiv():
+    setting_config_menu()
     if os.path.isfile( os.getcwd() + "\\pixiv_account.py" ):
         f = codecs.open( os.getcwd() +"\\pixiv_account.py", "r", "utf-8" )
         file_list = f.read().split("\r\n")
         f.close()
-        bak_file_list = file_list
     else:
         file_list = []
-
     try:
-        print("\npixiv account")
-        print("pixiv id : " + pixiv_account.pixiv_id)
-        temp = input("\t>> ")
-        if temp != "":    
-            file_list[0] = "pixiv_id = \"" + temp + "\"," 
-
-        print("password : " + pixiv_account.password)
-        temp = input("\t>> ")
-        if temp != "":    
-            file_list[1] = "password = \"" + temp + "\"," 
-        
-        print("user id : " + pixiv_account.user_id)
-        temp = input("\t>> ")
-        if temp != "":    
-            file_list[2] = "user_id = \"" + temp + "\"" 
-
-        print("\nreplase config file...")
+        input_and_setting_config("pixiv_account","pixiv_id",0,"pixiv account id")
+        input_and_setting_config("pixiv_account","password",1,"pixiv account password")
+        input_and_setting_config("pixiv_account","user_id",2,"pixiv account user id")
+        print("\nrewrite config file...")
         f = codecs.open( os.getcwd() + "\\pixiv_account.py", "w", "utf-8" )
         for i in file_list:
             f.write( i + "\r\n" )
         f.close()
         print("\nSuccess rewrite config file!")
     except:
-        file_list = bak_file_list
         print("\nERROR!\nsorry DON'T CHANGE config file")
     del file_list
+
 
 def get_illust():
     print("Getting illust script")
@@ -153,6 +114,7 @@ def get_illust():
     del illustrator_list
     output.print_prosess("End Prosess")
 
+
 def read_me():
     f = codecs.open("files\\readme.txt","r","utf-8")
     readme = f.read().split("\r\n")
@@ -163,11 +125,14 @@ def read_me():
     del readme
     print("\n-----------------------------------------------------------------------------------\n")
 
+
 def exit_menu():
     print("See you again!")
 
+
 def not_intger():
     print("prease any key")
+
 
 def others():
     print("""
@@ -184,12 +149,10 @@ def others():
 　 　　 ヽ | 　 /｀　 Ｔ　　/　/　 /ﾚﾚ′
 　 　 　　ヽ|,,/　 ,-|Т￣/,〃´´ヽ、
 　　　　　 　／￣/7￣ヽ、　 　 　 ヽ
-　 　　　　/　 //｀´|　 　 ヽ 　　　　 |        
-"""
-    )
+　 　　　　/　 //｀´|　 　 ヽ 　　　　 |""")
 
 if __name__ == '__main__':
-    top_title
+    top_title()
     temp = 1
     while temp != 0:
         controle_pannel()
