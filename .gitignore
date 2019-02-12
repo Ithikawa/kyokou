@@ -1,4 +1,2 @@
-config/pixiv_account.py
-files/file_list.txt
-files/illustrator.csv
-files/kyokou_log.txt
+pixiv_account.py
+files/*
