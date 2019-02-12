@@ -8,10 +8,3 @@ illustid_interval:float = 1.0
 get_illust_time:float = 2.0
 get_manga_page_time:float = 1.0
 log_file:str = "files\\kyokou_log.txt"
-
-
-
-
-
-
-

@@ -31,7 +31,7 @@ def get_illust_main(filelist: str,illustrator_pixiv_id: int,account: str,passwd:
                     sleep(float(get_illust_time))
                 sleep(float(illustid_interval))
         except:
-            print("\nERROR!\n")
+            return
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
