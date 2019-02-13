@@ -5,7 +5,7 @@ import config
 import file_controller
 
 def top_title():
-    print("""kyokou version 1.0.7
+    print("""kyokou version 1.0.8
 Copyright (C) 2018 by Asahi Ithikawa(@ichikawa_ykhm)""")
 
 

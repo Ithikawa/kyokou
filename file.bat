@@ -1,1 +1,0 @@
-dir w:\“ñŽŸŠG•ÛŠÇŒÉ /s /b *.jpeg *.jpg *.png *.gif > \files\file_list.txt

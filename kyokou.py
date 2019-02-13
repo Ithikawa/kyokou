@@ -1,7 +1,6 @@
 import codecs
 import os
 import config
-import pixiv_account
 from pixivpy3 import *
 from time import sleep
 import time
@@ -10,21 +9,30 @@ import output
 import core4pixivpy
 
 
-def input_and_setting_config(config_file,config_dim_name:str,config_line_num:int,help_str):
+def input_and_setting_config(file_list,config_file,config_dim_name:str,config_dim_char:str,config_line_num:int,help_str):
     print("\n"+help_str)
-    print( config_dim_name + " : " + eval( "%s.%s" % (config_file,config_dim_name) ) )
+    print( config_dim_name + " : " + str(eval( "%s.%s" % (config_file,config_dim_name) ) ) )
     temp = input("\t>> ")
     if temp != "":    
-        file_list[config_line_num] = "%s:str = \"" % config_dim_name + temp + "\""
+        file_list[config_line_num] = "%s:%s = \"" %(config_dim_name,config_dim_char) + temp + "\""
+    return file_list
 
 
 def setting_config_file():
     output.setting_config_menu()
     file_list = file_controller.input_file(os.getcwd() + "\\config.py")
     try:
-        input_and_setting_config("config","current_dir",0,"(full path) current directory as save picture")
-        input_and_setting_config("config","file_list_csv",1,"(full path) file path as put illust list file")
-        input_and_setting_config("config","illustrator_csv",2,"(full path) file path is crawl target illustrator list file")
+        file_list = input_and_setting_config(file_list,"config","current_dir","str",0,"(full path) current directory as save picture")
+        file_list = input_and_setting_config(file_list,"config","file_list_csv","str",1,"(full path) file path as put illust list file")
+        file_list = input_and_setting_config(file_list,"config","illustrator_csv","str",2,"(full path) file path is crawl target illustrator list file")
+        file_list = input_and_setting_config(file_list,"config","log_file",3,"str","(full path) file path as log file")
+        file_list = input_and_setting_config(file_list,"config","sleep_exception","float",4,"sec")
+        file_list = input_and_setting_config(file_list,"config","illustrator_buttom_sec","float",5,"sec")
+        file_list = input_and_setting_config(file_list,"config","illustrator_interval","float",6,"sec")
+        file_list = input_and_setting_config(file_list,"config","illustid_interval","float",7,"sec")
+        file_list = input_and_setting_config(file_list,"config","get_illust_time","float",8,"sec")
+        file_list = input_and_setting_config(file_list,"config","get_manga_page_time","float",9,"sec")
+        
         print("\nrewrite config file...")
         file_controller.output_file(file_list,os.getcwd() + "\\config.py")
         print("\nSuccess rewrite config file!")
@@ -35,16 +43,13 @@ def setting_config_file():
 
 def setting_pixiv():
     output.setting_config_menu()
-    if os.path.isfile( os.getcwd() + "\\pixiv_account.py" ):
-        file_list = file_controller.input_file(os.getcwd() +"\\pixiv_account.py")
-    else:
-        file_list = []
+    file_list = file_controller.input_file(os.getcwd() +"\\config.py")
     try:
-        input_and_setting_config("pixiv_account","pixiv_id",0,"pixiv account id")
-        input_and_setting_config("pixiv_account","password",1,"pixiv account password")
-        input_and_setting_config("pixiv_account","user_id",2,"pixiv account user id")
+        file_list = input_and_setting_config(file_list,"config","pixiv_id","str",10,"pixiv account id")
+        file_list = input_and_setting_config(file_list,"config","password","str",11,"pixiv account password")
+        file_list = input_and_setting_config(file_list,"config","user_id","str",12,"pixiv account user id")
         print("\nrewrite config file...")
-        file_controller.output_file(file_list,os.getcwd() + "\\pixiv_account.py")
+        file_controller.output_file(file_list,os.getcwd() + "\\config.py")
         print("\nSuccess rewrite config file!")
     except:
         print("\nERROR!\nsorry DON'T CHANGE config file")
@@ -65,18 +70,15 @@ def get_illust():
     for illustrator in illustrator_list:
         try:
             output.print_prosess( illustrator[1], "Start" )
-            start = time.time()
             saving_direcory_path = config.current_dir + "\\" + illustrator[1] + "\\"
             if not os.path.exists(saving_direcory_path):
                 os.mkdir(saving_direcory_path)
-            core4pixivpy.get_illust_main(file_list,int(illustrator[0]),pixiv_account.pixiv_id,pixiv_account.password,saving_direcory_path,config.get_manga_page_time,config.get_illust_time,config.illustid_interval)
-            elapsed_time = time.time() - start
+            core4pixivpy.get_illust_main(file_list,int(illustrator[0]),config.pixiv_id,config.password,saving_direcory_path,config.get_manga_page_time,config.get_illust_time,config.illustid_interval)
         except:
             output.print_prosess(illustrator[1],"ERROR")
             sleep(config.sleep_exception)
         output.print_prosess(illustrator[1],"Finish")
-        if float(elapsed_time) < config.illustrator_buttom_sec:
-            sleep(config.illustrator_interval)
+        sleep(config.illustrator_interval)
     del file_list
     del illustrator_list
     output.print_prosess("End Prosess")
