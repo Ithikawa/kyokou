@@ -19,4 +19,4 @@ echo get_illust_time:float = 2.0 >> config.py
 echo get_manga_page_time:float = 1.0 >> config.py
 echo pixiv_id:str = >> config.py
 echo password:str = >> config.py
-echo user_id:str = >> conifg.py
+echo user_id:str = >> config.py
