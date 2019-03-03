@@ -70,7 +70,7 @@ def get_illust():
     for illustrator in illustrator_list:
         try:
             output.print_prosess( illustrator[1], "Start" )
-            saving_direcory_path = config.current_dir +  illustrator[1] 
+            saving_direcory_path = config.current_dir +  illustrator[1] + "\\"
             if not os.path.exists(saving_direcory_path):
                 os.mkdir(saving_direcory_path)
             core4pixivpy.get_illust_main(file_list,int(illustrator[0]),config.pixiv_id,config.password,saving_direcory_path,config.get_manga_page_time,config.get_illust_time,config.illustid_interval)
