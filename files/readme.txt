@@ -2,7 +2,7 @@
 
 < 実行方法 >
 1.cmdを開きます
-2.これ(readme.txt)があるフォルダまで移動します
+2.これ(readme.txt)があるフォルダの一つ上に移動します
 3.python kyokou.py
 
 以上。
